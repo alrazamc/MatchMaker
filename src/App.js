@@ -1,25 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './components/template/Navbar';
+import theme from './config/MuiTheme';
+import { ThemeProvider } from '@material-ui/styles';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import SignIn from './components/auth/SignIn';
+import SignUp from './components/auth/SignUp';
+import Home from './components/home/Home';
+import Profile from './components/profile/Profile';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/signin" component={SignIn} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/profile" component={Profile} />
+          </Switch>
+        </div>
+      </Router>
+    </ThemeProvider>
   );
 }
 
