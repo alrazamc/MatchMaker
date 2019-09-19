@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Box, Container, makeStyles, Button, CircularProgress, FormHelperText } from '@material-ui/core';
 import { reduxForm, Field, SubmissionError } from "redux-form";
 import TextInput from '../form/TextInput';
@@ -6,6 +6,8 @@ import { getFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { SIGNUP_SUCCESS } from '../../store/actions/AuthActions';
+import SocialLogin from './SocialLogin';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -26,6 +28,10 @@ const useStyles = makeStyles(theme => ({
 
 const SignUp = (props) => {
   const classes = useStyles();
+  useEffect(() => {
+    document.title = "Sign Up | " + process.env.REACT_APP_NAME;
+  }, []);
+  const SocialLoginButtons = useMemo(() => (<SocialLogin />), [] );
   if(props.auth.uid)
     return <Redirect to="/profile" />
   const { handleSubmit, pristine, submitting, error, invalid } = props
@@ -80,6 +86,7 @@ const SignUp = (props) => {
               }
             </Box>
           </form>
+          { SocialLoginButtons }
         </Box>
       </Box>
     </Container>
@@ -89,7 +96,7 @@ const SignUp = (props) => {
 
 const onSubmit = (values, dispatch) => {
   return getFirebase().auth().createUserWithEmailAndPassword(values.email, values.password).then(response => {
-    console.log(response);
+    dispatch({type: SIGNUP_SUCCESS});
   }).catch(err => {
     throw new SubmissionError({
       _error: err.message

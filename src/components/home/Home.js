@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Container } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 const Home = (props) => {
+  useEffect(() => {
+    document.title = process.env.REACT_APP_NAME;
+  }, [])
   if(props.auth.uid)
     return <Redirect to="/profile" />
   return (
