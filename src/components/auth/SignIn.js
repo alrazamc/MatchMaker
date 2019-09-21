@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { Box, Container, makeStyles, Button, CircularProgress, FormHelperText } from '@material-ui/core';
 import { reduxForm, Field, SubmissionError } from "redux-form";
-import TextInput from '../form/TextInput';
+import TextInput from '../library/form/TextInput';
 import { getFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';

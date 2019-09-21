@@ -7,7 +7,8 @@ import { logOut } from '../../store/actions/AuthActions';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginBottom: theme.spacing(2)
   },
   logo: {
     flexGrow: 1
@@ -25,7 +26,6 @@ const AppNavbar = (props) => {
         <Container>
           <Toolbar>
             <Link to="/" className={classes.logo}>
-
               <img src={logo} alt="logo" className={classes.title} />
             </Link>
             <Button className={classes.button} onClick={props.logOut} variant="outlined" color="inherit">Log Out</Button>

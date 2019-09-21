@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Box, Typography, Container } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 const Profile = (props) => {
   useEffect(() => {
@@ -14,6 +14,8 @@ const Profile = (props) => {
       <Box m={6} textAlign="center">
         <Typography variant="h4">
           Profile Page
+          <br />
+          <Link to="/profile/edit" >Edit Profile</Link>
         </Typography>
       </Box>
     </Container>
