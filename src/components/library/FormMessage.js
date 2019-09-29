@@ -12,7 +12,7 @@ const FormMessage = ({ children, error, success, textLeft }) => {
     style.color = 'green';
   return (
     <FormHelperText style={style} component="div">
-      <Typography> { children } </Typography>
+      <Typography component="div"> { children } </Typography>
     </FormHelperText>
   );
 }

@@ -1,0 +1,26 @@
+import React from 'react';
+import { FormControl, RadioGroup, Radio, FormControlLabel, FormLabel, FormHelperText } from '@material-ui/core';
+
+const RadioInput = ({
+  label, input, options, id, fullWidth,
+  meta: { touched, invalid, error },
+  ...custom
+}) => {
+  return (
+    <FormControl fullWidth={fullWidth} error={ touched && invalid }>
+    <FormLabel component="legend">{label}</FormLabel>
+      <RadioGroup {...input} {...custom} row >
+        {
+          options.map(item => (
+            <FormControlLabel key={item.id} value={item.id} label={item.title} control={<Radio color="primary"  />} labelPlacement="end"/>
+          ))
+        }
+      </RadioGroup>
+      { touched && error && 
+        <FormHelperText error={true}>{ error }</FormHelperText> 
+      }
+    </FormControl>
+  );
+}
+ 
+export default RadioInput;

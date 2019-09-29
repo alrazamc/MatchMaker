@@ -5,7 +5,6 @@ import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
-import EditProfile from './components/profile/edit/EditProfile';
 import AppPreloader from './components/template/AppPreloader';
 import { connect } from 'react-redux';
 
@@ -24,7 +23,6 @@ function App({ isAuthLoaded }) {
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
           <Route exact path="/profile" component={Profile} />
-          <Route path="/profile/edit" component={EditProfile} />
         </Switch>
       </div>
     </Router>
