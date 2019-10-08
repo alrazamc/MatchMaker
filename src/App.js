@@ -7,6 +7,7 @@ import Home from './components/home/Home';
 import Profile from './components/profile/Profile';
 import AppPreloader from './components/template/AppPreloader';
 import { connect } from 'react-redux';
+import Photos from './components/profile/photos/Photos';
 
 
 
@@ -22,7 +23,8 @@ function App({ isAuthLoaded }) {
           <Route exact path="/" component={Home} />
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
-          <Route exact path="/profile" component={Profile} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/photos" component={Photos} />
         </Switch>
       </div>
     </Router>

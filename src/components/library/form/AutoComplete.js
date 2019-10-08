@@ -89,6 +89,7 @@ function Control(props) {
         inputProps: {
           className: classes.input,
           ref: innerRef,
+          autoComplete:"false",
           children,
           ...innerProps,
         },

@@ -7,6 +7,7 @@
 .env
 firebase.json
 .firebaserc
+package-lock.json
 # testing
 /coverage
 /.firebase

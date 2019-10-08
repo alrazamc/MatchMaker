@@ -59,7 +59,7 @@ const LocationForm = ({ system, cancel, change, formValues, initialValues, handl
 
   return (
       <Box minWidth={280} maxWidth={400} my={2}>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="false">
           <Box mb={2}>
             <Field 
               component={AutoComplete}

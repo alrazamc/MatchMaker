@@ -7,8 +7,7 @@ import { logOut } from '../../store/actions/AuthActions';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    marginBottom: theme.spacing(2)
+    flexGrow: 1
   },
   logo: {
     flexGrow: 1

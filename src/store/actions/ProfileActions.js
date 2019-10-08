@@ -33,3 +33,10 @@ export const profileEducationCareerUpdated = () => {
 export const profileLocationUpdated = () => {
   return {type: PROFILE_LOCATION_UPDATED};
 }
+
+//My Photos
+export const PHOTOS_VISIBILITY_UPDATE = "PHOTOS_VISIBILITY_UPDATE";
+
+export const photosVisibilityUpdated = () => {
+  return {type: PHOTOS_VISIBILITY_UPDATE};
+}
