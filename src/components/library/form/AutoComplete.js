@@ -140,6 +140,7 @@ function MultiValue(props) {
   return (
     <Chip
       tabIndex={-1}
+      variant="outlined"
       label={props.children}
       className={clsx(props.selectProps.classes.chip, {
         [props.selectProps.classes.chipFocused]: props.isFocused,
@@ -171,10 +172,32 @@ const components = {
 
 const AutoComplete = ({
   label, input, options, id, fullWidth,
-  input:{onChange, value, },
+  input:{onChange, value },
+  isMulti,
+  initValue,
   ...custom
 }) => {
-  const handleChange = useCallback((item) => onChange(item.value), [onChange]);
+  const handleChange = useCallback((item, action) => {
+    if(isMulti)
+    {
+      const values = [];
+      if(action.action === 'select-option' && action.option.value === null){ 
+        values.push(null); //if doesn't matter selected remove all other selected options
+        onChange(values);
+      }
+      else{
+        if(item && item.length) // normal item selected, remove doesn't matter if already selected
+          item.filter(record => record.value !== null).forEach(record => values.push(record.value));
+        else
+          values.push(null); // no item selected, doesn't matter should be default value
+        onChange(values);
+      }
+    }else
+    {
+      onChange(item.value);
+    }
+  }, [onChange, isMulti]);
+
   const suggestions =  useMemo(() => {
     return options.map(option => ({
       value: option.id,
@@ -182,8 +205,8 @@ const AutoComplete = ({
     }));
   }, [options]);
   const selectedOption = useMemo(() => {
-    return suggestions.filter(option => option.value === value );
-  }, [value, suggestions])
+      return suggestions.filter(option => isMulti ? value.includes(option.value) : option.value === value);
+  }, [value, suggestions, isMulti])
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -199,6 +222,7 @@ const AutoComplete = ({
               shrink: true,
             },
           }}
+          isMulti={isMulti}
           {...custom}
           value={selectedOption}
           options={suggestions}

@@ -1,6 +1,11 @@
+export const PHOTOS_VISIBILITY_UPDATE = "PHOTOS_VISIBILITY_UPDATE";
 export const PHOTO_NEW_ADDED = 'PHOTO_NEW_ADDED';
 export const PHOTO_REMOVED = 'PHOTO_REMOVED';
 export const PHOTO_PROFILE_PIC_CHANGED = 'PHOTO_PROFILE_PIC_CHANGED';
+
+export const photosVisibilityUpdated = () => {
+  return {type: PHOTOS_VISIBILITY_UPDATE};
+}
 
 export const addPhotoToProfile = (file_name, imgUrl, uid) => {
   return (dispatch, getState, { getFirestore }) => {

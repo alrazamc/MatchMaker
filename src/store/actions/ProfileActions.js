@@ -34,9 +34,9 @@ export const profileLocationUpdated = () => {
   return {type: PROFILE_LOCATION_UPDATED};
 }
 
-//My Photos
-export const PHOTOS_VISIBILITY_UPDATE = "PHOTOS_VISIBILITY_UPDATE";
+//Partner Preference
+export const PROFILE_PARTNER_PREFERENCE_UPDATED = "PROFILE_PARTNER_PREFERENCE_UPDATED";
 
-export const photosVisibilityUpdated = () => {
-  return {type: PHOTOS_VISIBILITY_UPDATE};
+export const profilePartnerPreferenceUpdated = () => {
+  return {type: PROFILE_PARTNER_PREFERENCE_UPDATED};
 }

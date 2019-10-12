@@ -7,15 +7,14 @@ const SliderInput = ({
   input: { onChange, name, value },
   ...custom
 }) => {
-  value = value === "" ? 0 : value;
   const handleChange = useCallback((event, value) => onChange(value), [onChange]);
   return (
     <FormControl fullWidth={fullWidth} error={ touched && invalid }>
-    <FormLabel component="legend">{label} { valueLabel ? `(${valueLabel})` : null }</FormLabel>
+      <FormLabel component="legend">{label} { valueLabel ? `(${valueLabel})` : null }</FormLabel>
       <Slider 
         label={label}
         name={name}
-        value={value}
+        value={value === "" ? 0 : value}
         onChange={handleChange}
       {...custom}
       />

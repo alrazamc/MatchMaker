@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
-import { Box, Button, FormHelperText, makeStyles, Typography, LinearProgress, Icon } from '@material-ui/core';
+import { Box, Button, makeStyles, Typography, LinearProgress, Icon } from '@material-ui/core';
 import { useFirebase } from 'react-redux-firebase'
 import { PHOTO_SIZE_LIMIT, PHOTO_LIMIT } from '../../../config/appConfig';
 import FormMessage from '../../library/FormMessage';
@@ -44,9 +44,41 @@ const Upload = ({ uid, addPhotoToProfile, totalProfileImages }) => {
     uploadProgress: 0
   });
   useEffect(() => {
+    console.log('updating');
+    function uploadFile(fileIndex)
+    {
+      if(!files[fileIndex]){
+        setFiles([]);
+        setUploaded(true);
+        return;
+      };
+      const file = files[fileIndex];
+      const file_name_parts = file.name.split('.');
+      file_name_parts[0] = Math.random().toString(36).substring(7);
+      const file_name = file_name_parts.join('.');
+      const storageRef = firebase.storage().ref();
+      const imgRef = storageRef.child(`images/${uid}/${file_name}`);
+      const uploadTask = imgRef.put(file);
+    
+      uploadTask.on('state_changed', function(snapshot){
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(`file: ${fileIndex+1}, progress: ${Math.round(progress)}`);
+        setUploadStats({
+          currentlyUploading: fileIndex + 1,
+          uploadProgress: Math.round(progress)
+        });
+      }, function(error) {
+        uploadFile(fileIndex + 1);
+      }, function() {
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          addPhotoToProfile(file_name, downloadURL, uid);
+        });
+        uploadFile(fileIndex + 1);
+      });
+    }
     if(files.length === 0) return;
-    uploadFile(0);
-  }, [files])
+      uploadFile(0);
+  }, [files, addPhotoToProfile, firebase, uid])
 
   const handleFiles = useCallback(() => {
     const selectedFiles = validateFiles(fileInput.current.files, totalProfileImages);
@@ -56,37 +88,7 @@ const Upload = ({ uid, addPhotoToProfile, totalProfileImages }) => {
       setUploaded(false);
     }
   }, [totalProfileImages]);
-  function uploadFile(fileIndex)
-  {
-    if(!files[fileIndex]){
-      setFiles([]);
-      setUploaded(true);
-      return;
-    };
-    const file = files[fileIndex];
-    const file_name_parts = file.name.split('.');
-    file_name_parts[0] = Math.random().toString(36).substring(7);
-    const file_name = file_name_parts.join('.');
-    const storageRef = firebase.storage().ref();
-    const imgRef = storageRef.child(`images/${uid}/${file_name}`);
-    const uploadTask = imgRef.put(file);
-  
-    uploadTask.on('state_changed', function(snapshot){
-      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log(`file: ${fileIndex+1}, progress: ${Math.round(progress)}`);
-      setUploadStats({
-        currentlyUploading: fileIndex + 1,
-        uploadProgress: Math.round(progress)
-      });
-    }, function(error) {
-      uploadFile(fileIndex + 1);
-    }, function() {
-      uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-        addPhotoToProfile(file_name, downloadURL, uid);
-      });
-      uploadFile(fileIndex + 1);
-    });
-  }
+
 
   return (
     <Box my={1} textAlign="center" height={150} display="flex" alignItems="center">

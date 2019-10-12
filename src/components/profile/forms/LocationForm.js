@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, CircularProgress, makeStyles } from '@material-ui/core';
-import { reduxForm, Field, SubmissionError, formValueSelector } from "redux-form";
+import { reduxForm, Field, SubmissionError, formValueSelector, change } from "redux-form";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { systemSelector } from '../../../store/selectors/systemSelector';
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const LocationForm = ({ system, cancel, change, formValues, initialValues, handleSubmit, pristine, submitting, error, invalid }) => {
+const LocationForm = ({ system, cancel, formValues, initialValues, handleSubmit, pristine, submitting, error, invalid }) => {
   const classes = useStyles();
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -34,7 +34,7 @@ const LocationForm = ({ system, cancel, change, formValues, initialValues, handl
         setStates(records);
         if(initialValues && formValues.country !== initialValues.country)
         {
-          change('state', {});change('city', {});
+          change('location', 'state', {});change('location', 'city', {});
           setCities([]);
         }
       })
@@ -50,7 +50,7 @@ const LocationForm = ({ system, cancel, change, formValues, initialValues, handl
         setCities(records);
         if(initialValues && formValues.state !== initialValues.state)
         {
-          change('city', {});
+          change('location', 'city', {});
         }
       })
   }, [formValues.state, initialValues]);

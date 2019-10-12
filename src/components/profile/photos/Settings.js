@@ -8,7 +8,7 @@ import { Box, Button, CircularProgress, makeStyles, Icon, Tooltip, IconButton } 
 import { systemSelector } from '../../../store/selectors/systemSelector';
 import FormMessage from '../../library/FormMessage';
 import { getFirestore } from 'redux-firestore';
-import { photosVisibilityUpdated } from '../../../store/actions/ProfileActions';
+import { photosVisibilityUpdated } from '../../../store/actions/PhotoActions';
 import HelpIcon from '@material-ui/icons/HelpOutline';
 
 const useStyles = makeStyles(theme => ({

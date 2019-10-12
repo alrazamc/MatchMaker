@@ -8,6 +8,7 @@ import Profile from './components/profile/Profile';
 import AppPreloader from './components/template/AppPreloader';
 import { connect } from 'react-redux';
 import Photos from './components/profile/photos/Photos';
+import PartnerPreference from './components/profile/preference/PartnerPreference';
 
 
 
@@ -25,6 +26,7 @@ function App({ isAuthLoaded }) {
           <Route path="/signup" component={SignUp} />
           <Route path="/profile" component={Profile} />
           <Route path="/photos" component={Photos} />
+          <Route path="/partner-preference" component={PartnerPreference}/>
         </Switch>
       </div>
     </Router>

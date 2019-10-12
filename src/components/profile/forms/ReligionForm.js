@@ -21,9 +21,9 @@ const ReligionForm = (props) => {
   const classes = useStyles();
   const { system, cancel, formValues, initialValues, handleSubmit, pristine, submitting, error, invalid } = props;
   let communities = !formValues.religion ? [] : system.communities.filter(item => (item.religion === formValues.religion) );
-  communities = communities.sort((a, b) => parseInt(a.id) - parseInt(b.id));
-  let languages = [...system.languages];
-  languages = languages.sort((a, b) => parseInt(a.id) - parseInt(b.id));
+  // communities = communities.sort((a, b) => parseInt(a.id) - parseInt(b.id));
+  // let languages = [...system.languages];
+  // languages = languages.sort((a, b) => parseInt(a.id) - parseInt(b.id));
   return (
       <Box minWidth={280} maxWidth={400} my={2}>
         <form onSubmit={handleSubmit}>
@@ -65,7 +65,7 @@ const ReligionForm = (props) => {
           <Box mb={2}>
             <Field 
               component={SelectInput}
-              options={languages}
+              options={system.languages}
               label="Mother Tongue"
               id="mother-tongue"
               name="motherTongue"
