@@ -4,11 +4,13 @@ import { Link as RouterLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logOut } from '../../../store/actions/AuthActions';
 import ProfileAvatar from '../../library/ProfileAvatar';
+import { useFirebase } from 'react-redux-firebase';
 
 
 const AccountMenu = ({ logOut }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
+  const firebase = useFirebase();
 
   const handleProfileMenuOpen = useCallback(event => {
     setAnchorEl(event.currentTarget);
@@ -38,7 +40,7 @@ const AccountMenu = ({ logOut }) => {
     >
       <MenuItem to="/my/profile" component={RouterLink} onClick={handleMenuClose}>Edit Profile</MenuItem>
       <MenuItem to="/my/account-settings" component={RouterLink}onClick={handleMenuClose}>Account Settings</MenuItem>
-      <MenuItem onClick={logOut}>Logout</MenuItem>
+      <MenuItem onClick={() => logOut(firebase)}>Logout</MenuItem>
     </Menu>
   ),  [anchorEl, handleMenuClose, isMenuOpen, logOut]);
   return (

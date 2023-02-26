@@ -21,6 +21,7 @@ export const configureAxios = (store) => {
       if(error.response && error.response.status === 401) //unAuthroized
       {
         localStorage.removeItem(process.env.REACT_APP_JWT_TOKEN);
+        localStorage.removeItem(process.env.REACT_APP_FB_TOKEN);
         const action = {
           type: actionTypes.AUTH_FAILED,
           message: error.response.data && error.response.data.message ? error.response.data.message : ""

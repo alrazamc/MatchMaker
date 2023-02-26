@@ -32,11 +32,21 @@ export const loadAuth = () => {
   }
 }
 
-export const logOut = (msg) => {
-  localStorage.removeItem(process.env.REACT_APP_JWT_TOKEN);
-  return {
-    type: actionTypes.LOGOUT_SUCCESS,
-    message: typeof msg === 'string' ? msg : "Logged out, Please login to continue"
+export const logOut = (firebase, msg) => {
+  return (dispatch, getState) => {
+    localStorage.removeItem(process.env.REACT_APP_JWT_TOKEN);
+    localStorage.removeItem(process.env.REACT_APP_FB_TOKEN);
+    firebase.auth().signOut().then(function() {
+      dispatch( {
+        type: actionTypes.LOGOUT_SUCCESS,
+        message: typeof msg === 'string' ? msg : "Logged out, Please login to continue"
+      });
+    }, function(error) {
+      dispatch( {
+        type: actionTypes.LOGOUT_SUCCESS,
+        message: typeof msg === 'string' ? msg : "Logged out, Please login to continue"
+      });
+    });
   }
 }
 
@@ -44,5 +54,19 @@ export const logOut = (msg) => {
 export const initResetPasswordForm = () => {
   return {
     type: actionTypes.INIT_RESET_PASSWORD_FORM
+  }
+}
+
+export const signinWithFirebase = (firebase) => {
+  return (dispatch, getState) => {
+    const fbtoken = localStorage.getItem(process.env.REACT_APP_FB_TOKEN);
+    if(!fbtoken) return;
+    const state = getState();
+    if(state.firebase.auth.uid) return;
+    firebase.auth().signInWithCustomToken(fbtoken).then(() => {
+      localStorage.removeItem(process.env.REACT_APP_FB_TOKEN);
+    }).catch(function(error) {
+     localStorage.removeItem(process.env.REACT_APP_FB_TOKEN);
+    });
   }
 }

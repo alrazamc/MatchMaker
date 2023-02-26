@@ -20,7 +20,6 @@ const PublicNavbar = () => {
         <Container>
           <Toolbar>
             <Link to="/" className={classes.logo}>
-
               <img src={logo} alt="logo" className={classes.title} />
             </Link>
             <Button component={Link} to="/signin" className={classes.button} variant="outlined" color="inherit">Sign In</Button>

@@ -10,6 +10,7 @@ import { systemSelector } from '../../../store/selectors/systemSelector';
 import axios from 'axios';
 import RadioInput from '../../library/form/RadioInput';
 import TextInput from '../../library/form/TextInput';
+import { useFirebase } from 'react-redux-firebase';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 const DeleteAccount = (props) => {
   const classes = useStyles();
+  const firebase = useFirebase();
   const { system, reason, handleSubmit, submitting, error, invalid, submitSucceeded } = props;
 
   return (

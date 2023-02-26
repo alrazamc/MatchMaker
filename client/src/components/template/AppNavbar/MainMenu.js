@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, Button } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import ActiveIcon from '@material-ui/icons/ArrowDropUp';
 
 const useStyles = makeStyles(theme => ({
@@ -22,7 +22,8 @@ const useStyles = makeStyles(theme => ({
 
 
 const MainMenu = (props) => {
-  const pathName = props.history.location.pathname;
+  const history = useHistory();
+  const pathName = history.location.pathname;
   const classes = useStyles();
 
   return (

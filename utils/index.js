@@ -1,23 +1,33 @@
 const jwt = require('jsonwebtoken');
 const AWS = require('aws-sdk');
+const moment = require('moment-timezone');
 
-const createJwtToken = (user) => {
+const createJwtToken = (user, expire_in_hours = 5 * 365 * 24) => {
   const payload = {
     uid: user._id, 
-    phoneNumber: user.phoneNumber,
-    email: user.email
+    alg: 'RS256',
+    iss: process.env.FIREBASE_SERVICE_ACCOUNT_EMAIL,
+    sub: process.env.FIREBASE_SERVICE_ACCOUNT_EMAIL,
+    aud: 'https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit',
+    iat: moment().unix(),
+    exp: moment().add(expire_in_hours*60, 'minutes').unix(),
+    claims: {
+      phoneNumber: user.phoneNumber,
+      email: user.email,
+    }
   }
   return new Promise((resolve, reject) => {
-    jwt.sign(payload, process.env.JWT_SIGN_KEY, (err, token) => {
+    jwt.sign(payload, process.env.JWT_SIGN_KEY, {algorithm : 'RS256'}, (err, token) => {
       if(err) reject(err);
       resolve(token);
     });
   })
 }
 
-const getPopupHtml = token => {
+const getPopupHtml = (token, fbtoken) => {
   return `<!DOCTYPE html><html><head><script>
       localStorage.setItem('${process.env.LOCAL_STORAGE_JWT_TOKEN_KEY}', '${token}');
+      localStorage.setItem('${process.env.LOCAL_STORAGE_FB_TOKEN_KEY}', '${fbtoken}');
       if(window.opener && window.opener.loadAuth)
         window.opener.loadAuth();
       window.close();

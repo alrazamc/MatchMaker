@@ -50,7 +50,8 @@ router.post('/signup', async (req, res) => {
     const response = {
       user: createAuthUser(userObj),
       profile: profile,
-      token: await createJwtToken(userObj)
+      token: await createJwtToken(userObj),
+      fbtoken: await createJwtToken(userObj, 1)
     }
     res.json(response);
   }catch(err)
@@ -85,7 +86,8 @@ router.post('/signin', async (req, res) => {
     res.json({
       user: createAuthUser(userObj),
       profile: profile,
-      token: await createJwtToken(userObj)
+      token: await createJwtToken(userObj),
+      fbtoken: await createJwtToken(userObj, 1)
     });
   }catch(err)
   {
@@ -107,7 +109,8 @@ router.get('/google/redirect', passport.authenticate('google', { session:false }
   }else
   {
     const token = await createJwtToken(req.user);
-    res.send( getPopupHtml(token) );
+    const fbtoken = await createJwtToken(req.user, 1);
+    res.send( getPopupHtml(token, fbtoken) );
   }
 });
 
@@ -124,7 +127,8 @@ router.get('/facebook/redirect', passport.authenticate('facebook', { session:fal
   }else
   {
     const token = await createJwtToken(req.user);
-    res.send( getPopupHtml(token) );
+    const fbtoken = await createJwtToken(req.user, 1);
+    res.send( getPopupHtml(token, fbtoken) );
   }
 });
 

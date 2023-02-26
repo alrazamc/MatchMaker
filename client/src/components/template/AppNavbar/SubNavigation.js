@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Paper, Tabs, Tab, makeStyles  } from '@material-ui/core';
 import { connect } from 'react-redux';
 import {  matchesRoutes } from '../../../config/routes';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,8 +16,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const SubNavigation = ({ routes, history }) => {
+const SubNavigation = ({ routes }) => {
   const classes = useStyles();
+  const history = useHistory();
   const [value, setValue] = React.useState(0);
   useEffect(() => {
     const index = routes.findIndex(item => item.path.split('?')[0] === history.location.pathname);

@@ -14,7 +14,7 @@ const authCheck = async (req, res, done) => {
     if(!token)
       throw new Error("");
     const decoded = await new Promise((resolve, reject) => {
-      jwt.verify(token, process.env.JWT_SIGN_KEY, (err, decoded) => { if(err) reject(new Error("Invalid Request")); resolve(decoded) });
+      jwt.verify(token, process.env.JWT_PUBLIC_KEY, {algorithm : 'RS256'}, (err, decoded) => { if(err) reject(new Error("Invalid Request")); resolve(decoded) });
     });
     let user = await User.findById(decoded.uid);
     if(!user)

@@ -17,7 +17,7 @@ export const searchRoutes = [
 ];
 
 export const inboxRoutes = [
-  { label: "Sent Requests", path: '/inbox/sent'},
-  { label: "Received Requests", path: '/inbox/received'},
+  { label: "Sent Requests", path: '/inbox/sent/pending'},
+  { label: "Received Requests", path: '/inbox/received/pending'},
   { label: "Connections", path: '/inbox/connections'},
 ];

@@ -103,3 +103,8 @@ export const profileLocationSelector = (state) => {
     location.country = data['countries'][info.country]['title'];
   return location;
 }
+
+export const profileSelector = (state, profileId) => {
+  if(!state.connections) return null;
+  return state.connections[profileId] ? state.connections[profileId] : null;
+}

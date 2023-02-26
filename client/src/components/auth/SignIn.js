@@ -100,15 +100,17 @@ const onSubmit = (values, dispatch) => {
   return axios.post('/auth/signin', user).then( response => {
     if(response.data.token)
       localStorage.setItem(process.env.REACT_APP_JWT_TOKEN, response.data.token);
-    if(response.data.user)
-      dispatch({
-        type: actionTypes.LOGIN_SUCCESS,
-        user: response.data.user
-      });
+    if(response.data.fbtoken)
+      localStorage.setItem(process.env.REACT_APP_FB_TOKEN, response.data.fbtoken);
     if(response.data.profile)
       dispatch({
         type: profileActionTypes.PROFILE_LOADED,
         profile: response.data.profile
+      });
+    if(response.data.user)
+      dispatch({
+        type: actionTypes.LOGIN_SUCCESS,
+        user: response.data.user
       });
   }).catch(err => {
     throw new SubmissionError({
